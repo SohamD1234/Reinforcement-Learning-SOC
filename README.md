@@ -1,40 +1,42 @@
-# Assignment 1: Solving MDPs
+# Assignment 2: Monte Carlo Programming
 
-You will be finding optimal policies for sample MDPs in this assignment.
+You will be using Monte Carlo techniques to find the optimal policies of MDPs whose dynamics are unknown.
+This assignment will have three sections.
 
-## Goal
+## Part I: Monte Carlo ES on an unknown MDP
 
-Implement the algorithms you have learnt to solve MDPs (Policy Iteration, Value Iteration and Linear Programming) through the content of this part to find the solution to a given MDP.
+- Here you are given an executable that represents the Markov Decision Process. The executable is named [```MDP```](./MDP).
 
-Follow good programming practices!
+- You can query the number of states and actions of the MDP with ```./MDP states``` and ```./MDP actions```. The discount factor of the MDP can be obtained with ```./MDP gamma```.
 
-Try comparing the two methods and see which seems to be faster; think of reasons why. Write them as comments in your code or maintain a separate markdown/text document.
+- To start interacting with the MDP, run ```./MDP <starting state>```. At every iteration, the executable will display the current state and current return of the MDP, and ask you to choose an action, after which it will report the reward obtained.
 
-## Test MDPs format
+- You must implement the Monte Carlo ES algorithm (in [```part1.ipynb```](./part1.ipynb)) that learns the optimal policy of the MDP by simulating episodes with exploring starts.
 
-You are given two MDPs to test on in the [MDPs](./MDPs) folder. Both are continuing MDPs. They follow the format:
+- See [```part1.ipynb```](./part1.ipynb) for more details.
 
-```html
-states <number of states>
-actions <number of actions>
-tran <initial state> <action taken> <final state> <reward> <transition probability>
-...all the other possible transitions...
-tran <initial state> <action taken> <final state> <reward> <transition probability>
-gamma  <discount rate>
-```
+## Part II: On Policy Methods to solve Tic-Tac-Toe
 
-The solutions to the MDPs are contained in the same directory. You can use these solutions to verify the output of your MDP planner. The format:
+- Tic-Tac-Toe is a simple game that can be modelled as an MDP, where you are one of the players and the environment represents your opponent.
 
-```html
-<optimal value function for first state> <optimal action for first state>
-...one entry for each state...
-<optimal value function for last state> <optimal action for last state>
-```
+- Tic-Tac-Toe can actually be solved explicitly using the [Minimax algorithm](../report.pdf) to get an exact solution.
 
-## A Rough Outline
+- Your first subtask will be to implement the minimax algorithm to solve Tic-Tac-Toe explicitly. See [```part2a.ipynb```](./part2a.ipynb) for details about the Minimax algorithm.
 
-- The first step would be parse through the MDP files and store them into suitable data structures in python.
-- Next, you have to implement the algorithms and store their results in the code.
-- Finally, you can make a function that takes the results generated and stores them in an output text file so that you can verify the solution.
-- You can also write another script to automate the process: run your python file and then compare the output produced to the solutions of the test MDPs provided. But, this isn't necessary as the MDPs aren't too big in size anyways.
-- For the Linear Programming section, you may use the ```pulp``` library.
+- We can also solve Tic-Tac-Toe using On policy methods.
+
+- Your second subtask will be to implement an on policy algorithm using $\varepsilon$-soft policies to solve Tic-Tac-Toe.
+
+- See ```part2.ipynb``` for more details.
+
+## Part III: Off Policy Methods to solve Snake
+
+- Here you will solve the game of Snake using Weighted Importance Sampling (an off-policy method). Refer to [Sutton and Barto](../SuttonBarto.pdf) for an explanation of this algorithm.
+
+- Again, you will make an engine that can solve the game of Snake.
+
+- You are not required to make a GUI for this game (although bonus points for those who do!)
+
+- The snake will be present in a 100x100 pixel grid, and will start at the center. You can choose whether it dies when hitting a wall or if it can pass through walls. Food will appear at random points on the grid. The snake gets a reward of $+1$ whenever it eats the food and it's length increases by one unit. If the snake intersects itself, it dies and the game is over. Refer [here](https://en.wikipedia.org/wiki/Snake_(video_game_genre)) for all the rules.
+
+- You can use the "WASD" keys to represent the actions that can be taken at any point in the game.
